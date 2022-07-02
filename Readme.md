@@ -51,7 +51,7 @@ lessons of Laravel framework PHP in Devstart-byAcademy
 ## :sparkles: Features ##
 
 :heavy_check_mark: [lesson 01](./aula-01/);\
-:heavy_check_mark: [lesson 01](./aula-02/);
+:heavy_check_mark: [lesson 02](./aula-02/);
 
 ## :rocket: Technologies ##
 
@@ -64,7 +64,7 @@ The following tools were used in this project:
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [PHP](https://www.php.net/),[Docker](https://docs.docker.com/get-docker/) [Composer](https://) installed.
+Before starting :checkered_flag:, you need to have [PHP](https://www.php.net/), [Docker](https://docs.docker.com/get-docker/), [Composer](https://) installed.
 
 ## :checkered_flag: Starting ##
 
@@ -86,7 +86,7 @@ make up
 # acces localhost:8080
 
 # run server
-# php -S localhost:8000 -t public
+php artisan serve
 
 # access your browser localhost:8000
 ```
