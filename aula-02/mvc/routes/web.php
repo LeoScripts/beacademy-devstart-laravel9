@@ -17,9 +17,6 @@ use App\Http\Controllers\ViaCepController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-Route::get('/viacep', [ViaCepController::class, 'index'])->name('viacep.index');
-Route::post('/viacep', [ViaCepController::class, 'index'])->name('viacep.index.post');
-Route::get('/viacep/{cep}', [ViaCepController::class, 'show'])->name('viacep.show');
-
-
+Route::get('/viacep',[ViaCepController::class,'index'])->name('viacep.index');
+Route::post('/viacep',[ViaCepController::class,'index'])->name('viacep.index.post');
+Route::get('/viacep/{cep}',[ViaCepController::class,'show'])->name('viacep.show');
