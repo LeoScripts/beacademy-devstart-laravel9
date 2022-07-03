@@ -40,4 +40,9 @@ use App\Http\Controllers\{
 com eles podemos popular nossa tabela com dados fake
 ou seja moca dados.
 
+- `php artisan db:seed` - executa o seeders e cria dados fake
+> por e esses dados vem de dentro de factory/UserFactory.php
+- `php artisan make:seeder AddressesSeeder` - criando nosso seed
+- `php artisan make:factory AddressesSeeder` - criando nosso factory
+- `php artisan make:model Address` - criando nosso model
 
