@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Http;
 class ViaCepController extends Controller
 {
-    public function index(){
-        dd('viacep');
+  public function index(Request $request)
+  {
+    if ($request->cep) {
+     return redirect('/viacep'.$request->cep);
     }
+    return view('viacep.index');
+  }
 
-    public function show(){
-        dd('viacep');
-    }
+  public function show($cep)
+  {
+    $response = Http::get("https://viacep.com.br/ws/65430000/json/")->json();
+    return $response;
+  }
 }
