@@ -18,6 +18,11 @@ use App\Http\Controllers\UserController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/user', [UserController::class, 'store'])->name('users.store');
+// importante resaltar que se colocarmos a rota  com paramentro antes das demais
+// quando tentarmos acessar uma rota apos o barra o laravel vai entender como um paramentro
+// e vai direcionar pra neste caso /users
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
