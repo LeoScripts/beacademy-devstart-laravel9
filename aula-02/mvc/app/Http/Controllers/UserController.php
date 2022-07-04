@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
     public function index()
     {
         // pegando todos os dados do banco
@@ -34,9 +35,30 @@ class UserController extends Controller
         if(!$user = User::find($id))
             return redirect()->route('users.index');
 
-            $title = 'Usurio '.$user->name;
-
+        $title = 'Usuario '. $user->name;
         return view('users.show', compact('user','title'));
 
     }
+
+    public function create()
+    {
+
+        // dd('create');
+        return view('users.create');
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+
+        // iserindo dados no banco
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->save();
+
+        return redirect()->route('users.index');
+    }
+
 }
