@@ -20,8 +20,16 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ date('d/m/Y - H:i:s', strtotime($user->created_at)) }}</td>
                     <td>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning text-black">Editar</a>
-                        <a href="#" class="btn btn-danger text-white">Excluir</a>
+                        <div>
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning text-black">Editar</a>
+                        </div>
+                        <div>
+                            <form action="{{ route('users.destroy', $user->id) }}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-danger text-white">Excluir</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </tbody>
