@@ -47,3 +47,5 @@ ou seja moca dados.
 - `php artisan make:model Address` - criando nosso model
 - `php artisan db:seed` - excuta o seed no banco de dados
 
+## listagem de usuarios
+
