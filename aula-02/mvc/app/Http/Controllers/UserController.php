@@ -78,7 +78,7 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreUpdateUserFormRequest $request, $id)
     {
         if(!$user = $this->model->find($id))
             return redirect()->route('users.index');

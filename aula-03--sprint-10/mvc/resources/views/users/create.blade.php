@@ -4,16 +4,16 @@
     <h1 class="bg-dark text-white p-3 mt-5 text-center">Novo Usuario</h1>
 
 
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                {{ $error }}
+                <br>
+            @endForeach
+        </div>
+    @endIf
 
     <form action="{{ route('users.store') }}" method="POST">
-        @if($errors->any())
-            <div class="alert alert-danger">
-                @foreach($errors->all() as $error)
-                    {{ $error }}
-                    <br>
-                @endForeach
-            </div>
-        @endIf
         <!-- o csrf é o nosso token e é obrigatorios -->
         @csrf
         <div class="mb-3">
