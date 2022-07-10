@@ -1,6 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/l/PROJETOS/beacademy-devstart-laravel9'
- 
 docker-compose up -d
 make: Leaving directory '/home/l/PROJETOS/beacademy-devstart-laravel9'
  

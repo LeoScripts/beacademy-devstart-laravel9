@@ -101,7 +101,7 @@ class StoreUpdateUserFormRequest extends FormRequest
             'name' => 'required|string|max:50|min:3',
 
             'email' => [
-                'require',
+                'required',
                 'email',
                 // unico , la no model users pega o email
                 // pega o parametro id da coluna id
