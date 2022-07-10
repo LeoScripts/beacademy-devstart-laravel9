@@ -13,7 +13,7 @@
         </div>
     @endIf
 
-    <form action="{{ route('users.store') }}" method="POST">
+    <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
         <!-- o csrf é o nosso token e é obrigatorios -->
         @csrf
         <div class="mb-3">
@@ -28,6 +28,12 @@
           <label for="password" class="form-label">Senha</label>
           <input type="password" name="password" class="form-control" id="password">
         </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Selecione uma imagem</label>
+            <input type="file" name="image" id="image" class="form-control form control-md">
+        </div>
+
         <button type="submit" class="btn btn-primary">Criar</button>
     </form>
 @endSection
