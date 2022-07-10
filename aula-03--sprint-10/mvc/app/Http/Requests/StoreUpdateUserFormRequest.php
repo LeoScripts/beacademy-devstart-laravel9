@@ -21,16 +21,13 @@ class StoreUpdateUserFormRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-
     public function rules()
     {
-
         $id = $this->id ?? '';
         return [
             'name' => 'required|string|max:50|min:3',
-
             'email' => [
-                'require',
+                'required',
                 'email',
                 'unique:users,email,{$id},id'
             ],

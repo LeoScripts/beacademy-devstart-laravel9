@@ -14,29 +14,18 @@ make: *** No rule to make target 'all'.  Stop.
 # There is NO WARRANTY, to the extent permitted by law.
  
 
- 
-# Make data base, printed on Thu Jul  7 17:28:55 2022
- 
+# Make data base, printed on Sat Jul  9 20:22:56 2022
 
 # Variables
- 
 
- 
 # environment
- 
 GDK_BACKEND = x11
- 
 # environment
- 
 LC_ALL = C
- 
 # environment
- 
 GNOME_SHELL_SESSION_MODE = pop
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-839dfe0f-1b8a-47a8-a3b5-7fcd57fbd9ad.sock
 # environment
 VSCODE_CWD = /home/l/PROJETOS/beacademy-devstart-laravel9
 # environment
@@ -63,14 +52,12 @@ PWD = /home/l/PROJETOS/beacademy-devstart-laravel9
 XDG_DATA_DIRS = /usr/share/pop:/usr/share/gnome:/home/l/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
-# environment
-VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
 NVM_INC = /home/l/.nvm/versions/node/v16.15.1/include/node
 # environment
-VSCODE_CODE_CACHE_PATH = /home/l/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /home/l/.config/Code/CachedData/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9
 # environment
 LANG = C
 # makefile (from '.env', line 1)
@@ -82,13 +69,11 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.110
+GNOME_TERMINAL_SERVICE = :1.109
 # makefile
 MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/l/PROJETOS/beacademy-devstart-laravel9
-# environment
-VSCODE_PIPE_LOGGING = true
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
@@ -114,15 +99,13 @@ MAKEFILE_LIST := Makefile .env
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
-VSCODE_PID = 33186
+VSCODE_PID = 8279
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/pop-os:@/tmp/.ICE-unix/2889,unix/pop-os:/tmp/.ICE-unix/2889
+SESSION_MANAGER = local/pop-os:@/tmp/.ICE-unix/2971,unix/pop-os:/tmp/.ICE-unix/2971
 # automatic
 *F = $(notdir $*)
 # environment
@@ -146,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/887921ff_2ad3_4778_8993_9cee9c974e84
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ab03b0dd_749f_4f62_980f_d09c2e427410
 # environment
 MAKELEVEL := 0
 # default
@@ -157,8 +140,6 @@ PATH = /home/l/.nvm/versions/node/v16.15.1/bin:/usr/local/sbin:/usr/local/bin:/u
 MAKEFILES := 
 # automatic
 ^F = $(notdir $^)
-# environment
-VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = l
 # environment
@@ -184,7 +165,7 @@ LOGNAME = l
 # makefile
 .DEFAULT_GOAL := up
 # environment
-SYSTEMD_EXEC_PID = 10743
+SYSTEMD_EXEC_PID = 7963
 # environment
 DISPLAY = :1
 # environment
@@ -218,7 +199,7 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-4910a7d3-1.67.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-4910a7d3-1.69.0-main.sock
 # environment
 TERM = xterm-256color
 # default
@@ -240,7 +221,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = pop
 # variable set hash-table stats:
-# Load=106/1024=10%, Rehash=0, Collisions=10/138=7%
+# Load=101/1024=10%, Rehash=0, Collisions=9/133=7%
 
 # Pattern-specific Variable Values
 
@@ -248,9 +229,9 @@ GDMSESSION = pop
 
 # Directories
 
-# . (device 2049, inode 4194695): 12 files, no impossibilities.
+# . (device 2049, inode 4194695): 13 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -309,8 +290,8 @@ all:
 down:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
- 
 #  File does not exist.
+ 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
 		docker-compose down
@@ -323,12 +304,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 164 B / avg = 7 B
-# current buf: size = 8162 B / used = 164 B / count = 21 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 22 / storage = 183 B / avg = 8 B
+# current buf: size = 8162 B / used = 183 B / count = 22 / avg = 8 B
 
-# strcache performance: lookups = 38 / hit rate = 44%
+# strcache performance: lookups = 39 / hit rate = 43%
 # hash-table stats:
-# Load=21/8192=0%, Rehash=0, Collisions=0/38=0%
-# Finished Make data base on Thu Jul  7 17:28:55 2022
+# Load=22/8192=0%, Rehash=0, Collisions=0/39=0%
+# Finished Make data base on Sat Jul  9 20:22:56 2022
 
  
