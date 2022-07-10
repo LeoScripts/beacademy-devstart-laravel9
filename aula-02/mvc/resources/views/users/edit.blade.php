@@ -1,9 +1,19 @@
 @extends('template.users')
 @section('title', "Usuario {$user->name}")
 @section('body')
-<h1 class="bg-dark text-white p-3 mt-5 text-center">{{ $user->name }}</h1>
+    <h1 class="bg-dark text-white p-3 mt-5 text-center">{{ $user->name }}</h1>
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                {{ $error }}
+                <br>
+            @endForeach
+        </div>
+    @endIf
 
     <form action="{{ route('users.update', $user->id) }}" method="post">
+
         @method('PUT')
         <!-- o csrf é o nosso token e é obrigatorios -->
         @csrf
