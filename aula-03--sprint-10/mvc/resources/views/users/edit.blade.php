@@ -2,6 +2,7 @@
 @section('title', "Usuario {$user->name}")
 @section('body')
 <h1 class="bg-dark text-white p-3 mt-5 text-center">{{ $user->name }}</h1>
+
     @if($errors->any())
         <div class="alert alert-danger">
             @foreach($errors->all() as $error)
@@ -10,6 +11,7 @@
             @endForeach
         </div>
     @endIf
+
     <form action="{{ route('users.update', $user->id) }}" method="post">
         @method('PUT')
         <!-- o csrf é o nosso token e é obrigatorios -->
@@ -27,6 +29,12 @@
           <label for="password" class="form-label">Senha</label>
           <input type="password" name="password" class="form-control" id="password">
         </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Selecione uma imagem</label>
+            <input type="file" name="image" id="image" class="form-control form control-md">
+        </div>
+
         <button type="submit" class="btn btn-primary">Atualizar</button>
     </form>
 @endSection

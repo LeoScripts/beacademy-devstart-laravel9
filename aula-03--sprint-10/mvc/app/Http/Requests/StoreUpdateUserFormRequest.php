@@ -38,6 +38,11 @@ class StoreUpdateUserFormRequest extends FormRequest
                 'required',
                 'min:4',
                 'max:12'
+            ],
+            'image' => [
+                'file',
+                //tipos caso queira que receba de tudo e so nao colocar
+                // 'mines:jpeg,png'
             ]
         ];
 
