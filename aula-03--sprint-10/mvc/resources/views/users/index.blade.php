@@ -19,9 +19,15 @@
                 <!-- foreach da engine -->
                 @foreach($users as $user)
                     <tr>
-                        <th>
-                            <img src="{{ asset('storage/'.$user->image) }}" width="50px" height="50px" class="rounded-circle" alt="">
-                        </th>
+                        @if($user->image)
+                            <th>
+                                <img src="{{ asset('storage/'.$user->image) }}" width="50px" height="50px" class="rounded-circle" alt="">
+                            </th>
+                        @else
+                            <th>
+                                <img src="{{ asset('storage/profile/avatar-pessoa.svg') }}" width="50px" height="50px" class="rounded-circle" alt="">
+                            </th>
+                        @endif
                       <th scope="row">{{ $user->id }}</th>
                       <td>{{ $user->name }}</td>
                       <td>{{ $user->email }}</td>
@@ -31,4 +37,7 @@
                 @endForeach
             </tbody>
         </table>
+        <div class="justify-content-center pagination">
+            {{ $users->links('pagination::bootstrap-4') }}
+        </div>
 @endSection

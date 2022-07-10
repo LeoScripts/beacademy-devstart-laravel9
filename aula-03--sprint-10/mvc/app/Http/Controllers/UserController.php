@@ -14,15 +14,8 @@ class UserController extends Controller
     }
     public function index()
     {
-        // pegando todos os dados do banco
-        $users = User::all();
 
-        // mostra todas as informações
-        // dd($users);
-
-        // exibindo so os users em json
-        // return $users;
-
+        $users = User::paginate(5);
         return view('users.index', compact('users'));
     }
     public function show($id)
@@ -64,9 +57,14 @@ class UserController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
 
-        $file = $request['image'];
-        $path = $file->store('profile','public');
-        $data['image'] = $path;
+        // validando se a imagem vier ele salva o caminho no banco
+        // se nao vier e nao salvara e vai tudo dar certo
+        if($request->image){
+            $file = $request['image'];
+            $path = $file->store('profile','public');
+            $data['image'] = $path;
+        }
+
 
         $this->model->create($data);
 

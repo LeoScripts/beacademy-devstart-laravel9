@@ -2,19 +2,13 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target 'all'.  Stop.
 
 # GNU Make 4.3
- 
 # Built for x86_64-pc-linux-gnu
- 
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
- 
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
- 
 # This is free software: you are free to change and redistribute it.
- 
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sat Jul  9 20:22:56 2022
+# Make data base, printed on Sun Jul 10 10:51:44 2022
 
 # Variables
 
@@ -69,7 +63,7 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.109
+GNOME_TERMINAL_SERVICE = :1.106
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -99,13 +93,13 @@ MAKEFILE_LIST := Makefile .env
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 8279
+VSCODE_PID = 9232
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/pop-os:@/tmp/.ICE-unix/2971,unix/pop-os:/tmp/.ICE-unix/2971
+SESSION_MANAGER = local/pop-os:@/tmp/.ICE-unix/3163,unix/pop-os:/tmp/.ICE-unix/3163
 # automatic
 *F = $(notdir $*)
 # environment
@@ -129,7 +123,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ab03b0dd_749f_4f62_980f_d09c2e427410
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/85f739cc_d3ce_443e_95f7_01ed1b8745ee
 # environment
 MAKELEVEL := 0
 # default
@@ -165,7 +159,7 @@ LOGNAME = l
 # makefile
 .DEFAULT_GOAL := up
 # environment
-SYSTEMD_EXEC_PID = 7963
+SYSTEMD_EXEC_PID = 8998
 # environment
 DISPLAY = :1
 # environment
@@ -285,13 +279,13 @@ all:
 .PHONY: up down logs
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 down:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
 		docker-compose down
@@ -310,6 +304,6 @@ down:
 # strcache performance: lookups = 39 / hit rate = 43%
 # hash-table stats:
 # Load=22/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Sat Jul  9 20:22:56 2022
+# Finished Make data base on Sun Jul 10 10:51:44 2022
 
  
