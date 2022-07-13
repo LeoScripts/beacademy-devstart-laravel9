@@ -9,7 +9,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Titulo</th>
                     <th scope="col">Postagem</th>
-                    <th scope="col">Data de Cadastro</th>
+                    <th scope="col" >data de criação</th>
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -19,8 +19,7 @@
                       <th scope="row">{{ $post->id }}</th>
                       <td>{{ $post->title }}</td>
                       <td>{{ $post->post }}</td>
-                      <td>{{ date('d/m/Y - H:i:s', strtotime($user->created_at)) }}</td>
-                      <td><a style="text-decoration: none;" href="{{ route('users.show', $user->id) }}" class="btn btn-primary">Visualizar</a></td>
+                      <td>{{ date('d/m/Y - H:i:s') }}</td>
                     </tr>
                 @endForeach
             </tbody>
