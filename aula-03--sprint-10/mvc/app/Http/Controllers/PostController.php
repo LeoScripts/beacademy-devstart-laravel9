@@ -20,14 +20,17 @@ class PostController extends Controller
 
     public function index()
     {
-        // dd($this-user->find($userId));
-        // if(!$user = $this->user->find($userId)){
-        //     return redirect()->back();
-        // }
-
-        // $posts = $user->posts()->get();
         $posts = $this->post->all();
-
         return view('posts.index', compact( 'posts'));
+    }
+
+    public function show($useId)
+    {
+        if(!$user = $this->user->find($useId))
+            return redirect()->back();
+
+        $posts = $user->posts()->get();
+
+        return view('posts.show', compact('user','posts'));
     }
 }
