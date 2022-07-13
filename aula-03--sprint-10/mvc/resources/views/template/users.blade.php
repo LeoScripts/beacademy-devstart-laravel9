@@ -11,9 +11,10 @@
 <body>
 
     <div class="container">
-        <li class="nav-item">
-            <a class="nav-link text-while" href="/posts">Posts</a>
-        </li>
+        <nav class="d-flex gap-3">
+            <a class="btn nav-link" href="/users">Usuarios</a>
+            <a class="btn nav-link" href="/posts">Postagens</a>
+        </nav>
         @yield('body')
     </div>
 </body>
