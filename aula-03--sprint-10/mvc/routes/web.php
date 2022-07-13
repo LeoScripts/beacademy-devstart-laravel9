@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ViaCepController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\{
+    ViaCepController,
+    UserController,
+    PostController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +21,8 @@ use App\Http\Controllers\UserController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::get('/posts',[PostController::class, 'index'])->name('posts.index');
 Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
