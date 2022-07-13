@@ -136,7 +136,7 @@ e no depois de table la na pagina de exibição inserimos nossa paginação
 {{ $users->links('pagination::bootstrap-4') }} 
 ```
 
-## relacionamento 1 para muitos (1 para N)
+## relacionamento 1 para muitos (1 para N) e 1 para n
 
 - `php artisan make:model post -m` - cria um model e uma migration com nome de post
 
@@ -290,3 +290,166 @@ class PostFactory extends Factory
 
 ```
 depois executamos `php artisan db:seed PostSeeder` pra criar 
+apois ter criado os postes so pra testes fiz uso deles envindo os dado no compac e passando pro front
+
+a PostController ficou assim 
+
+```php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Models\User;
+use App\Models\Post;
+
+class PostController extends Controller
+{
+    protected $user;
+    protected $post;
+
+    public function __construct(User $user, Post $post)
+    {
+        $this->user = $user;
+        $this->post = $post;
+    }
+
+    public function index()
+    {
+        $posts = $this->post->all();
+        return view('posts.index', compact( 'posts'));
+    }
+
+    public function show($useId)
+    {
+        if(!$user = $this->user->find($useId))
+            return redirect()->back();
+
+        $posts = $user->posts()->get();
+
+        return view('posts.show', compact('user','posts'));
+    }
+}
+
+```
+
+a view index da pasta post
+```php
+@extends('template.users')
+@section('title', 'Listagem de Postagens')
+@section('body')
+        <h1 class="bg-dark text-white p-3 mt-5 text-center">Listagem de Usuarios</h1>
+
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">ID</th>
+                    <th scope=>Usuario</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Postagem</th>
+                    <th scope="col">Data de Cadastro</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <!-- foreach da engine -->
+                @foreach($posts as $post)
+                    <tr>
+                      <th scope="row">{{ $post->id }}</th>
+                      <td>{{ $post->user->name }}</td>
+                      <td>{{ $post->title }}</td>
+                      <td>{{ $post->post }}</td>
+                      <td>{{ date('d/m/Y - H:i:s', strtotime($post->created_at)) }}</td>
+                    </tr>
+                @endForeach
+            </tbody>
+        </table>
+        <div class="justify-content-center pagination">
+        </div>
+@endSection
+```
+view show da pasta post
+
+```php
+@extends('template.users')
+@section('title', "Listagem de postagens do {$user->name}")
+@section('body')
+    <h1>Postagens do {{$user->name}}</h1>
+
+    @foreach($posts as $post)
+        <div class="border border-5 m-3 p-3 rounded">
+            <label class="form-label"> <b>Identificação Nº</b> <br> {{ $post->id }} </label>
+            <br>
+            <label class="form-label"><b>Status </b> <br> {{ $post->active?'Ativo':'Inativo' }} </label>
+            <br>
+            <label class="form-label"> <b>Titulo:</b> <br> {{ $post->title }} </label>
+            <br>
+            <label class="form-label"><b>Postagens:</b> <be> </label>
+            <textarea class="form-control" rows="3">{{ $post->post }} </textarea>
+        </div>
+    @endForeach
+
+@endSection
+
+```
+
+e na view index da pasta user foi acrecentado mais um campo
+
+```php
+@extends('template.users')
+@section('title', 'Listagem de Usuarios')
+@section('body')
+        <h1 class="bg-dark text-white p-3 mt-5 text-center">Listagem de Usuarios</h1>
+        <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Usuario</a>
+
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Image</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Postagens</th>  // campo acrecentado
+                    <th scope="col">Data de Cadastro</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <!-- foreach da engine -->
+                @foreach($users as $user)
+                    <tr>
+                        @if($user->image)
+                            <th>
+                                <img src="{{ asset('storage/'.$user->image) }}" width="50px" height="50px" class="rounded-circle" alt="">
+                            </th>
+                        @else
+                            <th>
+                                <img src="{{ asset('storage/profile/avatar-pessoa.svg') }}" width="50px" height="50px" class="rounded-circle" alt="">
+                            </th>
+                        @endif
+                      <th scope="row">{{ $user->id }}</th>
+                      <td>{{ $user->name }}</td>
+                      <td>{{ $user->email }}</td>
+
+                        // campo acrecentado 
+                      <td> 
+                      <a style="text-decoration: none;" href="{{ route('posts.show', $user->id) }}" class="btn btn-outline-primary">Postagens - {{ $user->posts->count() }}</a>
+                      </td>
+
+                      <td>{{ date('d/m/Y - H:i:s', strtotime($user->created_at)) }}</td>
+                      <td><a style="text-decoration: none;" href="{{ route('users.show', $user->id) }}" class="btn btn-primary">Visualizar</a></td>
+                    </tr>
+                @endForeach
+            </tbody>
+        </table>
+        <div class="justify-content-center pagination">
+            {{ $users->links('pagination::bootstrap-4') }}
+        </div>
+@endSection
+
+```
+as rotas pra esse fluxo sao essas
+
+```php
+Route::get('/posts',[PostController::class, 'index'])->name('posts.index');
+Route::get('/users/{id}/posts', [PostController::class, 'show'])->name('posts.show');
+```
+
