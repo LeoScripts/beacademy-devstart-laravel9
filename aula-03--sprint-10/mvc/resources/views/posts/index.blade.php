@@ -7,9 +7,10 @@
             <thead>
                 <tr class="text-center">
                     <th scope="col">ID</th>
+                    <th scope=>Usuario</th>
                     <th scope="col">Titulo</th>
                     <th scope="col">Postagem</th>
-                    <th scope="col" >data de criação</th>
+                    <th scope="col">Data de Cadastro</th>
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -17,9 +18,10 @@
                 @foreach($posts as $post)
                     <tr>
                       <th scope="row">{{ $post->id }}</th>
+                      <td>{{ $post->user->name }}</td>
                       <td>{{ $post->title }}</td>
                       <td>{{ $post->post }}</td>
-                      <td>{{ date('d/m/Y - H:i:s') }}</td>
+                      <td>{{ date('d/m/Y - H:i:s', strtotime($post->created_at)) }}</td>
                     </tr>
                 @endForeach
             </tbody>
