@@ -110,7 +110,7 @@ dentro do metodo index na controller de user fizemos a seguinte configuração
 ```php
     public function index()
     {
-        // pegando todos os dados do banco e exibindo apenas 5
+        // pegando todos os dados do banco e exibindo apenas 5 itens
         $users = User::paginate(5);
 
         // mostra todas as informações
@@ -135,3 +135,158 @@ e no depois de table la na pagina de exibição inserimos nossa paginação
 // os links so vao aptarecer se extirem mais de uma paginas
 {{ $users->links('pagination::bootstrap-4') }} 
 ```
+
+## relacionamento 1 para muitos (1 para N)
+
+- `php artisan make:model post -m` - cria um model e uma migration com nome de post
+
+dentro da nossa migration fizemos a seguinte configuração
+
+```php 
+
+    public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            // pegando o id do usuario e tranformando  uma foreign key dentro da tabela de posts
+            $table->foreignId('user_id')
+            // dizendo que o campo e contraint
+            ->constrained('users')
+            // tirando os vinculos de tabelas
+            ->onDelete('CASCADE')
+            ->onUpdate('CASCADE');
+            // criando os campos
+            $table->string('title');
+            $table->text('post');
+            // campo que diz se o post esta ativo ou nao
+            $table->boolean('active')->default(true);
+            // nosso querido created_at e updatade_at
+            $table->timestamps();
+        });
+    }
+```
+
+apos termos criado nossi migrate demos o comando `php artisan migrate` que cria nossa tabela no banco
+
+na ´model de user´  criamos um metodo chamado posts como abaixo
+
+```php
+    public function posts()
+    {
+        //hasMany  de um para muitos
+        return $this->hasMany(Post::class);
+    }
+```
+
+ja na nossa model post fizemos o seguinte
+```php
+    public function user()
+    {
+        // belongsTo de muitos para um
+        return $this->belongsTo(User::class);
+    }
+```
+
+agora criamos a nossa controller `php artisan make:controller PostController` e fizemos a configuração abaixo
+
+
+```php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Models\{
+    User,
+    Post
+};
+
+class PostController extends Controller
+{
+    protected $user;
+    protected $post;
+
+    public function __construct(User $user, Post $post)
+    {
+        $this->user = $user;
+        $this->post = $post;
+    }
+
+    public function index($userIS)
+    {
+        // pra testar
+        // dd($this->user->find($userId))
+
+        if(!$user = $this->user->find($userId)) {
+            // back volta pra telas que estavamos antes
+            return redirect()->back();
+        }
+
+        $posts = user->posts()->fet();
+
+        return view('posts.index', compact('user','posts'));
+    }
+}
+
+```
+
+depois criamos nossa rota web.php
+
+`Route::get('/posts',[PostController::class, 'index'])-name('posts.index');`
+
+-  criamos a pasta de post dentro das views e o arquivo index.blade.php e compiamos o conteudo da index dos users
+
+- criamos um seeder pra criar alguns os posts de testes `php artisan make:seeder PostSeeder` e fazemos a seguinte configuração
+
+```php
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class PostSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // pegando models e criando 30 posts fake
+        \App\Models\Post::factory(30)->create();
+    }
+}
+
+```
+
+- `php artisan make:factory PostFactory` - depois criamos a PostFactory.php dentrode database/factories
+
+```php
+amespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
+ */
+class PostFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => User::all()->random()->id,
+            'title' => $this->faker->title(),
+            'post' => $this->faker->text(),
+            'active' => true
+        ];
+    }
+}
+
+```
+depois executamos `php artisan db:seed PostSeeder` pra criar 

@@ -11,6 +11,9 @@
 <body>
 
     <div class="container">
+        <li class="nav-item">
+            <a class="nav-link text-while" href="/posts">Posts</a>
+        </li>
         @yield('body')
     </div>
 </body>
