@@ -4,7 +4,7 @@
     <h1>Postagens do {{$user->name}}</h1>
 
     @foreach($posts as $post)
-        <div>
+        <div class="border border-5 m-3 p-3 rounded">
             <label class="form-label"> <b>Identificação Nº</b> <br> {{ $post->id }} </label>
             <br>
             <label class="form-label"><b>Status </b> <br> {{ $post->active?'Ativo':'Inativo' }} </label>
