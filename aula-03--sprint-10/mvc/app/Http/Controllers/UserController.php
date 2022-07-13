@@ -14,22 +14,15 @@ class UserController extends Controller
     }
     public function index()
     {
-
         $users = User::paginate(5);
         return view('users.index', compact('users'));
     }
     public function show($id)
     {
-        if(!$user = User::find($id))
-            return redirect()->route('users.index');
+        $team = \App\Models\Team::find(1);
+        $team->load('users');
 
-        // $title = 'Usuario '. $user->name;
-        // return view('users.show', compact('user','title'));
-
-        $user->load('teams');
-
-        return $user;
-
+        return $team;
     }
 
     public function create( )

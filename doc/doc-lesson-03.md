@@ -543,3 +543,61 @@ criamos na  alguns registros na mao na tabela team_user a nossa tabela pivo
 
     }
 ```
+
+####  team para user
+
+no nosso model Team 
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Team extends Model
+{
+    // uma trade caso precisemos criar uns seeders ja ta aqui
+    use HasFactory;
+
+    // dados que iremos receber
+    protected $fillable = [
+        'id',
+        'name'
+    ];
+
+    public function users()
+    {
+        // aqui fizemos o mesmo realacinamento so que com o caminho inverso
+        return $this->BelongsToMany(User::class);
+    }
+}
+```
+- o teste faremos na UserController no methodo show ('somente testes ')
+
+```php
+    public function show($id)
+    {
+        // aqui exibimos os dados de um usuario ------------
+        // if(!$user = User::find($id))
+        //     return redirect()->route('users.index');
+
+        // $title = 'Usuario '. $user->name;
+        // return view('users.show', compact('user','title'));
+
+
+        // aqui buscamos os times de um usuario ---------------
+        // $user->load('teams');
+        // return $user;
+
+        // eu fiz a importação aqui mesmo ----------------------
+        // mais e melhor usar o use la topo desta forma = use \App\Models\Team
+        // e aqui usar somente o nome do item que no caso e Team
+        $team = \App\Models\Team::find(1); // buscando o time com id um
+        $team->load('users'); // load carrega os usuarios que estao cadastrados nes team(time)
+
+        return $team; // aqui eu exibo os dados
+    }
+```
+
+- os testes estaval sendo feitos na rota http:locahost:8000/users/8
