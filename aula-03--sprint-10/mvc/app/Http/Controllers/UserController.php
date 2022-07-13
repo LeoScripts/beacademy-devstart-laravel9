@@ -20,20 +20,15 @@ class UserController extends Controller
     }
     public function show($id)
     {
-        // dd("Id do usuário é {$id}");
-
-        // uma forma tambem
-        // $user = User::where('id', $id)->first();
-
-        // busca de banco de dados apartir da versao 8 ou 9
-        // $user = User::findOrFail($id);
-
-        // exemplo de testes
         if(!$user = User::find($id))
             return redirect()->route('users.index');
 
-        $title = 'Usuario '. $user->name;
-        return view('users.show', compact('user','title'));
+        // $title = 'Usuario '. $user->name;
+        // return view('users.show', compact('user','title'));
+
+        $user->load('teams');
+
+        return $user;
 
     }
 

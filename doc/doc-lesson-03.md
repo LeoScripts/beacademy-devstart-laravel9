@@ -453,3 +453,93 @@ Route::get('/posts',[PostController::class, 'index'])->name('posts.index');
 Route::get('/users/{id}/posts', [PostController::class, 'show'])->name('posts.show');
 ```
 
+## relacimnamento muitos pra muitos
+
+- `php artisan make:model Team --migration` - cria model e migration e aqui ecolhemos o nome de team
+
+> a migration ficou da seguinte forma
+```php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('teams', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        // EXEMPLO DE CRIAÇÃO DE TABELA NA MESMA MIGRATIONS MAIS PODERIA TER SIDO FEITA EM UMA MIGRATION PROPRIA
+        // CRIANDO UM TABELA PIVO QUE RECEBERA OS ID DOS DADOS DAS DUAS TABELAS
+        Schema::create('team_user', function(Blueprint $table){
+            // o campo id e opcional
+            $table->id();
+            // campo foreign  com id do usuario
+            $table->foreignId('user_id')
+                ->contrained('users')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+            // campo foreign com id do time
+            $table->foreignId('team_id')
+                ->contrained('teams')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('teams');
+        Schema::dropIfExists('team_user');
+    }
+};
+
+```
+
+logo em seguida fizemos a migração para o banco com o comando `php artisan migrate`
+
+cadastrei alguns temes na mao la no sgbd todos com um nome e um data de cadastro `now`
+
+no model de users colocamos mais uma relacionamento 
+que é o de times que de muitos para muitos
+```php
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+```
+
+criamos na  alguns registros na mao na tabela team_user a nossa tabela pivo 
+
+- na UserController fizemos uma validação pra ver se esta chegando no method show
+> modificamos o que tinha para 
+```php
+    public function show($id)
+    {
+        if(!$user = User::find($id))
+            return redirect()->route('users.index');
+
+        // $title = 'Usuario '. $user->name;
+        // return view('users.show', compact('user','title'));
+
+        $user->load('teams');
+
+        return $user;
+
+    }
+```
