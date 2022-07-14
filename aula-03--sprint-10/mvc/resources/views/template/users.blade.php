@@ -15,7 +15,31 @@
             <a class="btn nav-link" href="/users">Usuarios</a>
             <a class="btn nav-link" href="/posts">Postagens</a>
         </nav>
-        @yield('body')
+        <div class="col-2">
+            <ul class="navbar-nav mr-auto">
+                @if(Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{Auth::user()->name}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit">sair</button>
+                        </form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Cadastrar</a>
+                    </li>
+                @endif
+            </ul>
+        </div>
+
+            @yield('body')
+
     </div>
 </body>
 </html>
