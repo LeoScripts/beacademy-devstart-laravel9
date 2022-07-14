@@ -649,3 +649,249 @@ na nossa UserController modificamos o metodo index para
         return view('users.index', compact('users'));
     }
 ```
+
+#### autenticação 
+
+- primeiro fomos na documentação
+
+```bash
+# pacote de autenticação simples que ja vem no laravel
+composer require laravel/breeze --dev
+
+# instalamos as dependencias necessarias neste caso as do Node JS e seguida ja executando o server
+npm install && npm run dev
+
+# copie o seu arquivo de rotas antes de dar esse comando 
+# ele reseta o arquivo de rotas
+# depois compare o que ele tirou e coloque novamente
+php artisan breeze:install
+
+```
+
+modificamos nosso template users.blade.php para
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>@yield('title')</title>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="d-flex gap-3">
+            <a class="btn nav-link" href="/users">Usuarios</a>
+            <a class="btn nav-link" href="/posts">Postagens</a>
+        </nav>
+        <div class="col-2">
+            <ul class="navbar-nav mr-auto">
+                @if(Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Leandro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="">sair</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="">Cadastrar</a>
+                    </li>
+                @endif
+            </ul>
+        </div>
+        // ---- apagar este codigo depois deixei somente pra lembrar que tambem e possivel desta forma
+        // somente teste 
+        // tambem uma possibilidade
+        // @if(Auth::user())
+                // deixar somente este
+        //     @yield('body')
+        // @endif
+    </div>
+</body>
+</html>
+```
+
+- depois vamos em Http/Providers no arquivo RouteServiseProviders e colocamos da seguinte forma
+
+```php
+
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    /**
+     * The path to the "home" route for your application.
+     *
+     * Typically, users are redirected here after authentication.
+     *
+     * @var string
+     */
+
+    // aqui mudamos de dashbod para users
+    public const HOME = '/users';
+
+    /**
+     * Define your route model bindings, pattern filters, and other route configuration.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->configureRateLimiting();
+
+        $this->routes(function () {
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/web.php'));
+        });
+    }
+
+    /**
+     * Configure the rate limiters for the application.
+     *
+     * @return void
+     */
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+    }
+}
+
+```
+
+- em seguida criamos um grupo de rotas sendo validado por um middleware como baixo
+> este e nosso arquivo de rotas
+
+```php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    ViaCepController,
+    UserController,
+    PostController
+};
+
+require __DIR__.'/auth.php';
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::middleware(['auth'])->group(function() {
+
+    Route::get('/posts',[PostController::class, 'index'])->name('posts.index');
+    Route::get('/users/{id}/posts', [PostController::class, 'show'])->name('posts.show');
+
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/user', [UserController::class, 'store'])->name('users.store');
+    // importante resaltar que se colocarmos a rota  com paramentro antes das demais
+    // quando tentarmos acessar uma rota apos o barra o laravel vai entender como um paramentro
+    // e vai direcionar pra neste caso /users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+
+    Route::get('/viacep',[ViaCepController::class,'index'])->name('viacep.index');
+    Route::post('/viacep',[ViaCepController::class,'index'])->name('viacep.index.post');
+    Route::get('/viacep/{cep}',[ViaCepController::class,'show'])->name('viacep.show');
+});
+
+```
+
+```diff
+- ATENÇÃO
+! CASO O TAILWIND E POSTCSS APRESENTEM ERROS NO LARAVEL
+
++ EXECUTE OSL CODIGOS ABAIXO NO SEU TERMINAL E DEPOIS REINICIE O SERVIDOR NPM
+
+npm install -D tailwindcss postcss autoprefixer
+
+npx tailwindcss init -p
+```
+
+-  logo depois colocamos o nosso botao de sair nossa view template
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>@yield('title')</title>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="d-flex gap-3">
+            <a class="btn nav-link" href="/users">Usuarios</a>
+            <a class="btn nav-link" href="/posts">Postagens</a>
+        </nav>
+        <div class="col-2">
+            <ul class="navbar-nav mr-auto">
+                @if(Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Leandro</a>
+                    </li>
+
+                    // modifiquei aqui --------------------------
+                    <li class="nav-item">
+
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit">sair</button>
+                        </form>
+                    </li>
+
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        // aqui estou usando neste momento a rota que vem pronta do breezer
+                        // mas no caso deste projeto e interessante deixarmos a rota create fora do middleware
+                        // pra que assim possamos criar da forma que iniciamos que foi com foto
+                        <a class="nav-link" href="{{ route('register') }}">Cadastrar</a>
+                    </li>
+                @endif
+                    // ate aqui -----------------------------------
+            </ul>
+        </div>
+
+            @yield('body')
+
+    </div>
+</body>
+</html>
+```
+```diff
+- ATENÇÃO 
+! PRA RESGATE DE SENHA USANDO O LARAVEL E DE SUMA IPORTANCIA COLOCAR AS CREDENCIAIS DE EMAIL NO ARQUIVO .ENV
+
+```
