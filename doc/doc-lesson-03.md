@@ -600,4 +600,52 @@ class Team extends Model
     }
 ```
 
-- os testes estaval sendo feitos na rota http:locahost:8000/users/8
+- os testes estaval sendo feitos na rota http:locahost:8000/users/8 
+
+#### campo de pesquisa(searsh)
+neste part fizemos nossa aplicação fazer a persquisa por qualquer nome e tambem pelo email
+
+- na pagina index do user adicionamos este form abaixo do h1 que é o nosso campo de pesquisa
+```php
+
+    <form action="{{ route('users.index') }}" method="GET" class="my-3">
+        <div class="input-group">
+            <input type="search" class="form-control rounded" name="search">
+            <button type="submit" class="btn btn-outline-primary">pesquisar</button>
+        </div>
+    </form>
+```
+- na nossa model de user criamos um novo metodo
+```php
+
+  // o parametro pode ser nulo
+    public function gerUsers(string $search = null)
+    {
+        // todos os users , o que vier do search eu atribuo a query
+        $users = $this->where(function ($query) use ($search) {
+            if($search){
+                // monta uma query que seja igual ao que vem la do imput
+                $query->where('email', $search);
+                // se nao for pelo email chama pelo nome que tenha algo do tipo que vem do imput
+                $query->orWhere('name', 'LIKE', "%{$search}%");
+            }
+        })
+        // trazendo 5 users  somente
+        ->paginate(5);
+
+        return $users;
+    }
+```
+
+na nossa UserController modificamos o metodo index para
+```php
+    public function index(Request $request)
+    {
+        // $users = User::paginate(5);
+        $users = $this->model->gerUsers(
+            // se nao vier nada no search vai ser vazio
+            $request->search ?? ''
+        );
+        return view('users.index', compact('users'));
+    }
+```
