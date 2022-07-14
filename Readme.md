@@ -61,6 +61,7 @@ The following tools were used in this project:
 - [Docker](https://docs.docker.com/get-docker/)
 - [Mysql](https://www.mysql.com/)
 - [Laravel 9](https://)
+- [Bootstrap 5](https://)
 
 ## :white_check_mark: Requirements ##
 

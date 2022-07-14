@@ -4,6 +4,17 @@
         <h1 class="bg-dark text-white p-3 mt-5 text-center">Listagem de Usuarios</h1>
         <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Usuario</a>
 
+
+
+                    <form action="" method="GET" class="my-3">
+                        <div class="input-group">
+                            <input type="search" class="form-control rounded" name="search">
+                            <button type="submit" class="btn btn-outline-primary">pesquisar</button>
+                        </div>
+                    </form>
+
+
+
         <table class="table">
             <thead>
                 <tr class="text-center">

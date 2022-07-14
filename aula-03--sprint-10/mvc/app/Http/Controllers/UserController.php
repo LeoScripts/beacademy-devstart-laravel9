@@ -12,9 +12,13 @@ class UserController extends Controller
     {
         $this->model = $user;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(5);
+        // $users = User::paginate(5);
+        $users = $this->model->gerUsers(
+            // se nao vier nada no search vai ser vazio
+            $request->search ?? ''
+        );
         return view('users.index', compact('users'));
     }
     public function show($id)
