@@ -895,3 +895,197 @@ npx tailwindcss init -p
 ! PRA RESGATE DE SENHA USANDO O LARAVEL E DE SUMA IPORTANCIA COLOCAR AS CREDENCIAIS DE EMAIL NO ARQUIVO .ENV
 
 ```
+
+#### autenticação 2
+
+- `php artisan make:migration add_field_is_admin_users_table` - criamos nossa migration
+
+- depois acessamos a migration ja criada e inserimos a seguinte configuração
+
+```php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        // crio o campo is admin na tabela users
+        Schema::table('users', function(Blueprint $table) {
+            $table->boolean('is_admin')->nullable()->after('image');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        // apago o campo is_admin da tabela users
+        Schema::table('users', function(Blueprint $table) {
+            $table->dropColumn('is_admin');
+        });
+    }
+};
+
+```
+- em seguida `php artisan migrate` - pra migrarmos esta configuração para o banco de dados
+- depois direto no sgbd inserimos em algum usuario o `is_admin com o valor 1` isso siginifica que ele e um administrador
+- `php artisan make:middleware IsAdmin` - criamos um middleware com o nome de IsAdmin
+- no middleware criado (IsAdmin)
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class IsAdmin
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        // se existir o usuario e ele for admin
+        if(Auth::user() && Auth::user()->is_admin == 1 ){
+            // pode continuar com request
+            return $next($request);
+        }
+
+        // caso este usuario nao seja admin retorne pra / e mostre o erro 
+        return redirect('/')->with('ERROR', 'Voce nao esta autorizado');
+    }
+}
+
+```
+- na model User adcionamos mais um campo
+```php
+    protected $fillable = [
+        'name',
+        'avatar',
+        'is_admin', // campo adicionado
+        'email',
+        'password',
+        'remember_token',
+        'email_verified_at'
+    ];
+
+```
+- dentro da pasta Http acessamos o arquivo kernel.php e fazemos a seguinte configuração dentro da `protected $routeMiddleware`
+```php
+    protected $routeMiddleware = [
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'admin' => \App\Http\Middleware\IsAdmin::class,  // linha adicionada
+    ];
+```
+
+- logo depois criamos grupo de rotas pra validar o user e o admin
+
+```php
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', [UserController::class, 'admin'])->name('admin');
+});
+```
+- depois criamos o metodo admin la na UserController
+> pra ser mais organizado e enteressante criar um controller pra cada coisa exemplo 
+>> um pra admin, um pra dashboard, um pra user e etc.
+```php
+
+```
+- criamos tambem views/admin/index.blede.php
+```php
+@extends('template.users')
+@section('title', 'Listagem de Usuarios')
+@section('body')
+
+<div class="content" >
+    <img src="https://thumbs.dreamstime.com/b/futuristic-dashboard-business-analytics-information-digital-graphic-sound-wave-blue-background-183780294.jpg" alt="">
+</div>
+
+@endSection
+
+```
+
+- dentro do nosso template o codigo com comentario abaixo
+> este so mostrea o dashboard se o usuario for admin
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>@yield('title')</title>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="d-flex gap-3">
+            <a class="btn nav-link" href="/users">Usuarios</a>
+            <a class="btn nav-link" href="/posts">Postagens</a>
+        </nav>
+        <div class="col-2">
+            <ul class="navbar-nav mr-auto">
+                @if(Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{Auth::user()->name}}</a>
+                    </li>
+
+                    // codigo adicionado -------------------------
+                    @if(Auth::user()->is_admin == 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin') }}">dashboard</a>
+                        </li>
+                    @endif
+                    // ----------------------------------------------
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit">sair</button>
+                        </form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Cadastrar</a>
+                    </li>
+                @endif
+            </ul>
+        </div>
+
+            @yield('body')
+
+    </div>
+</body>
+</html>
+
+```
