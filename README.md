@@ -50,12 +50,12 @@ lessons of Laravel 9 framework PHP in Devstart-byAcademy
 
 ## :sparkles: Features ##
 
-- :heavy_check_mark: sprint 08;
+- #### :heavy_check_mark: sprint 08
     - [x] - More Laravel 9
     - [x] - Install
     - [X] - Php artisan
     - [X] - Routes
-- :heavy_check_mark: sprint 09;\
+- #### :heavy_check_mark: sprint 09
     - [X] - More methods HTTP
     - [X] - Http Client
     - [X] - Migrations
@@ -65,7 +65,7 @@ lessons of Laravel 9 framework PHP in Devstart-byAcademy
     - [X] - Create user
     - [X] - Update user
     - [X] - Validations form fields
-- :heavy_check_mark: sprint 10;\
+- #### :heavy_check_mark: sprint 10
     - [X] - Update file
     - [X] - Listen image in user
     - [X] - Relation part I
@@ -74,7 +74,7 @@ lessons of Laravel 9 framework PHP in Devstart-byAcademy
     - [X] - Search
     - [X] - Authentication I
     - [X] - Authentication II
-- :heavy_check_mark: sprint 11;
+- #### :heavy_check_mark: sprint 11
     - [X] - Flash Messages
     - [X] - Exceptions
     - [X] - Unit Testing
