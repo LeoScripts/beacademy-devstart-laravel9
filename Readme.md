@@ -98,7 +98,6 @@ php artisan serve
 
 # access your browser localhost:8000
 ```
-[more information](./doc.md)
 
 ## :memo: License ##
 
