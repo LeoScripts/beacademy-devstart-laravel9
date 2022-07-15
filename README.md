@@ -133,6 +133,13 @@ npm run dev
 php artisan serve
 
 # access your browser localhost:8000
+
+# solution erros
+php artisan key:generate
+
+php artisan config:clear
+
+php artisan config:cache
 ```
 
 ## :memo: License ##
