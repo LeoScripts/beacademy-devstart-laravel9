@@ -30,7 +30,7 @@
 
         <div class="mb-3">
             <label for="image" class="form-label">Selecione uma imagem</label>
-            <input type="file" name="image" id="image" class="form-control form control-md">
+            <input type="file" name="image" id="image" class="form-control form control-md" >
         </div>
 
         <button type="submit" class="btn btn-primary">Criar</button>
