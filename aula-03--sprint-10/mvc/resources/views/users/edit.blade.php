@@ -35,6 +35,9 @@
             <input type="file" name="image" id="image" class="form-control form control-md">
         </div>
 
+
+
+
         <button type="submit" class="btn btn-primary">Atualizar</button>
     </form>
 @endSection

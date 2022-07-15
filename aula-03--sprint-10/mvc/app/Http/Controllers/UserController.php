@@ -21,10 +21,12 @@ class UserController extends Controller
     }
     public function show($id)
     {
-        $team = \App\Models\Team::find(1);
-        $team->load('users');
+        if(!$user = User::find($id))
+            return redirect()->route('users.index');
 
-        return $team;
+        $title = 'Usurio '.$user->name;
+
+        return view('users.show', compact('user','title'));
     }
 
     public function create( )
@@ -37,18 +39,18 @@ class UserController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
 
-        if(!$request->image)
+        if(!$request->image){
             $data['image'] = 'profile/avatar.png';
-
-        $file = $request['image'];
-        $path = $file->store('profile','public');
-        $data['image'] = $path;
-
-
+        }else{
+            $file = $request['image'];
+            $path = $file->store('profile','public');
+            $data['image'] = $path;
+        }
         $this->model->create($data);
-        return redirect()->route('users.index');
 
-        // return session()->flash('create', 'Usuario cadastrado com sucesso');
+        $request->session()->flash('create', 'Usuario cadastrado com sucesso');
+        return redirect()->route('users.index')->with('create', 'Usuario cadastrado com sucesso');
+
     }
 
     public function edit($id)

@@ -36,6 +36,6 @@ modifiquei o template e na link da rota de regitro coloquei o link da rota de cr
 ```php
     <li class="nav-item">
         <!-- <a class="nav-link" href="{{ route('register') }}">Cadastrar</a> -->
-        <a class="nav-link" href="{{ route('user.create') }}">Cadastrar</a>
+        <a class="nav-link" href="{{ route('users.create') }}">Cadastrar</a>
     </li>
 ```

@@ -39,12 +39,12 @@ class StoreUpdateUserFormRequest extends FormRequest
                 'min:4',
                 'max:12'
             ],
-            // 'image' => [
-            //     'file',
-            //     // 'required'
-            //     //tipos caso queira que receba de tudo e so nao colocar
-            //     // 'mines:jpeg,png'
-            // ]
+            'image' => [
+                'file',
+                // 'required'
+                //tipos caso queira que receba de tudo e so nao colocar
+                // 'mines:jpeg,png'
+            ]
         ];
 
         if($this->method('PUT')){

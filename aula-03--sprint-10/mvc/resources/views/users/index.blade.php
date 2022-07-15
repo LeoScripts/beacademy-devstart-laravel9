@@ -1,7 +1,15 @@
 @extends('template.users')
 @section('title', 'Listagem de Usuarios')
 @section('body')
+
         <h1 class="bg-dark text-white p-3 mt-5 text-center">Listagem de Usuarios</h1>
+        @if(session()->has('create'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Usuario</a>
 
 
