@@ -45,6 +45,7 @@
                     <th scope="col">Postagens</th>
                     <th scope="col">Data de Cadastro</th>
                     <th scope="col">Ações</th>
+                    <th scope="col">preço teste</th>
                 </tr>
             </thead>
             <tbody class="text-center">
@@ -66,8 +67,9 @@
                       <td>
                       <a style="text-decoration: none;" href="{{ route('posts.show', $user->id) }}" class="btn btn-outline-primary">Postagens - {{ $user->posts->count() }}</a>
                       </td>
-                      <td>{{ date('d/m/Y - H:i:s', strtotime($user->created_at)) }}</td>
+                      <td>{{ formatDateTime($user->created_at) }}</td>
                       <td><a style="text-decoration: none;" href="{{ route('users.show', $user->id) }}" class="btn btn-primary">Visualizar</a></td>
+                      <td>{{ formatMoney(5000.00) }} </td>
                     </tr>
                 @endForeach
             </tbody>

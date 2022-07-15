@@ -80,6 +80,11 @@ $ cd beacademy-devstart-laravel9
 # insert your credentils in
 # database and password
 
+# execute is important
+composer dump-autoload 
+# or
+composer dump
+
 # run database
 make up
 
