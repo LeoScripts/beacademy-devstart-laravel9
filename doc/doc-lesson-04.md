@@ -169,3 +169,54 @@ nosso handle.php ficou assim no metodo register
 
 ```
 
+## testes
+
+o laravel ja possui instalado o php unit test
+> `phpunit.xml` - aquivo de configuração dos testes
+
+- `php artisan test` - executa os testes
+- `php artisan make:test UserTest` -  cria um novo teste com o nome de UserTest
+
+- no arquivo de configuração dos testes decomentamos duas linhas
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite"/> <!-- linha descomentada -->
+        <env name="DB_DATABASE" value=":memory:"/> <!-- linha descomentada -->
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+    </php>
+</phpunit>
+
+```
+no .env em APP_ENV trocamos de `local` para `testing`
+```
+APP_NAME=Laravel
+APP_ENV=testing
+APP_KEY=base64:eEk3Uw/ZtWrths4AgqTYgj0mZ2mX0NFtL4FTZGp8yIY=
+APP_DEBUG=true
+APP_URL=http://localhost
+```
