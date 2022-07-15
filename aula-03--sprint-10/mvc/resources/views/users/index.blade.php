@@ -5,7 +5,19 @@
         <h1 class="bg-dark text-white p-3 mt-5 text-center">Listagem de Usuarios</h1>
         @if(session()->has('create'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <strong>Atenção</strong> {{ session()->get('create') }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session()->has('edit'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Atenção</strong> {{ session()->get('edit') }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session()->has('destroy'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Atenção</strong> {{ session()->get('destroy') }}.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
