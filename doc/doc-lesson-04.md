@@ -213,6 +213,13 @@ o laravel ja possui instalado o php unit test
 
 ```
 no .env em APP_ENV trocamos de `local` para `testing`
+```diff
+- ATENÇÃO
+- este erro acontece pois esta havendo um erro no laravel nos testes
+! apos modificar o .env nossa variavel APP_LOCAL  de local para testing perdi os dados do banco
+! como seu eu tivesse feito um migrate:rollback e depois desse um migrate novamente
++ a boa noticia e que nao perdi o banco e nem as tabelas
+```
 ```
 APP_NAME=Laravel
 APP_ENV=testing
@@ -251,12 +258,7 @@ class UserTest extends TestCase
 - e logo executamos os testes com `php artisan test` e ja recebemos alguns passando e outros não
 - depois apagamos o arquivo example.php da pasta test ja pasta Unit remoneiamos para UserTest.php
 - depois de renomeiamos o aquivo e classe dentro dele executamos `composer dump-autoload` ATENÇÃO SEMPRE FAZER ISSO QUANDO PROCEDER DESTA FORMA
-```diff
-- ATENÇÃO
-! apos rodar o comando acima perdi todos os meus dados do banco
-! como seu eu tivesse feito um migrate:rollback e depois desse um migrate novamente
-+ a boa noticia e que nao perdi o banco e nem as tabelas
-```
+
 > Unit/UserTest.php
 ```php
 <?php
@@ -376,4 +378,61 @@ logo apos fizemos mais alguns testes
 
 + testes: 4 passed
 time: 0.30s
+```
+
+## Reaproveitamento de codigo
+- dentro da pasta app criamos uma outa pasta chamada de helpers geralmente, so que pra ser mais rapido usamos somente um arquivo com este nome dentra da pasta app.
+
+e nosso helpers.php ficou assim
+```php
+
+function formatDateTime($dateTime)
+{
+    // carbon - trata as datas
+    // createFromFormat - formato que vem do banco de dados
+    // format transforma - pra nossa data
+    return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $dateTime)->format('d/m/Y - H:i:s');
+}
+
+function formatMoney($money)
+{
+    // str_replace - vai remover os pontos e deixar limpo o nosso valor($money)
+    $clean_money = str_replace('.','', $money);
+
+    // number_format = a cada 2 posições adicina uma virgula(,)
+                    // se for casa milenar(mil) coloca um ponto(.)
+    return 'R$ '.number_format($clean_money,2,',','.');
+}
+
+```
+- tambem acrecentamos uma configuração no composer.json dentro de autoload
+```json
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            //normalmente seria assim mas como so criamos o arquivo so pra testes
+            //"app/Helpers/helpers.php"
+            // ficou assim 
+            "app/helpers.php"
+        ]
+    },
+```
+- apos as modificações rodamos o `composer dump-autoload ` pra ele reiniciar nosso composer
+> e muito importante rodar este comando
+
+- dentro de pasta de view users abrimos o index e modificamos para
+> no nosso td que retorna a hora passamos a usar uma função do nosso helper
+```php
+// antes
+// <td>{{ date('d/m/Y - H:i:s', strtotime($user->created_at)) }}</td>
+// o agora
+<td>{{ formatDateTime($user->created_at) }}</td>  
+
+// tambem inserimos um td so pra testar nossa função helper de preço
+<td>{{ formatMoney(5000.00) }} </td>
+
 ```
