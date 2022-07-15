@@ -44,7 +44,7 @@ class UserController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
 
-        if(!$request->image){
+        if(!$request->image || !$request->image == null){
             $data['image'] = 'profile/avatar.png';
         }else{
             $file = $request['image'];

@@ -220,3 +220,160 @@ APP_KEY=base64:eEk3Uw/ZtWrths4AgqTYgj0mZ2mX0NFtL4FTZGp8yIY=
 APP_DEBUG=true
 APP_URL=http://localhost
 ```
+- a serguir criamos no primeiro teste `php artisan make:test UserTest`
+- acessao a pasta de tests/Feature e abrimos o noss UserTest.php
+
+```php
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class UserTest extends TestCase
+{
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_example()
+    {
+        // colocamos aqui o nosso teste de exemplo de / para /users
+        $response = $this->get('/users');
+
+        $response->assertStatus(200);
+    }
+}
+```
+- e logo executamos os testes com `php artisan test` e ja recebemos alguns passando e outros não
+- depois apagamos o arquivo example.php da pasta test ja pasta Unit remoneiamos para UserTest.php
+- depois de renomeiamos o aquivo e classe dentro dele executamos `composer dump-autoload` ATENÇÃO SEMPRE FAZER ISSO QUANDO PROCEDER DESTA FORMA
+```diff
+- ATENÇÃO
+! apos rodar o comando acima perdi todos os meus dados do banco
+! como seu eu tivesse feito um migrate:rollback e depois desse um migrate novamente
++ a boa noticia e que nao perdi o banco e nem as tabelas
+```
+> Unit/UserTest.php
+```php
+<?php
+
+namespace Tests\Unit;
+
+use PHP\Framework\TestCase;
+
+class UserTest extends TestCase
+{
+    public function test_example()
+    {
+        $this->assertTrue(true);
+    }
+}
+
+```
+
+> tests/Feature/UserTest.php
+```php
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class UserTest extends TestCase
+{
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_example()
+    {
+        $response = $this->get('/users');
+
+        $response->assertStatus(200);
+    }
+}
+
+```
+- depois removemos a pasta Auth de dentro da pasta Feature
+
+- agora criando nosso codigo de teste
+> em Feature/UserTest.php
+>> eu estava recebendo um erro devido o Userfactory nao estar passando uma imagem ei so cololoquei la o campo image e ja foi
+```php
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+use App\Models\User;
+
+class UserTest extends TestCase
+{
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_user()
+    {
+
+        $user = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => '123456',
+            'image' => 'imagem_defalt'
+        ]);
+
+        // verificando se o  usuario esta logado
+        $this->actingAs($user);
+
+        $response = $this->get('/users');
+
+        $response->assertStatus(200);
+    }
+}
+
+```
+
+logo apos fizemos mais alguns testes
+
+> acrentamos dentro do UserTest da pasta Feature mais este teste
+```php
+    public function test_create_user()
+    {
+        $response = $this->post('/login/crate', [
+            'name' => 'Admin',
+            'email' => 'admin@email.com',
+            'password' => '123456789',
+            'is_admin' => '1',
+        ]);
+
+        $response->assertStatus(200);
+    }
+```
+> e este dentro da pasta Unit no nosso UserTest
+
+```php
+    public function test_create_user()
+    {
+        $this->assertTrue(true);
+    }
+```
+
+```diff
+- ATENÇÃO
+! é importante frisar que nos meus testes os itens estavam sim sendo criados no banco de dados
+
++ testes: 4 passed
+time: 0.30s
+```
