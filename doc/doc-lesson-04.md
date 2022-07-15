@@ -15,27 +15,42 @@ sprint 11
         }
 
         $this->model->create($data);
+     
+        // // 1 exemplo de inserssao de flash messas   
+        // $request->session()->flash('create', 'Usuario cadastrado com sucesso');
         // return redirect()->route('users.index');
 
-        // linha inserida
-        return session()->flash('create', 'Usuario cadastrado com sucesso');
+        // este modelo usamos em update e destroy
+        return redirect()->route('users.index')->with('create', 'Usuario criado com sucesso');
     }
 ```
 
-e na view de create inseri nossa flash message
-```php
-    @if(session()->has('create'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
-    //<h1 .................
-```
 modifiquei o template e na link da rota de regitro coloquei o link da rota de criação que eu criei
 ```php
     <li class="nav-item">
         <!-- <a class="nav-link" href="{{ route('register') }}">Cadastrar</a> -->
-        <a class="nav-link" href="{{ route('user.create') }}">Cadastrar</a>
+        <a class="nav-link" href="{{ route('users.create') }}">Cadastrar</a>
     </li>
 ```
+e na view de index de users inseri nossas flash message
+```php
+        @if(session()->has('create'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Atenção</strong> {{ session()->get('create') }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session()->has('edit'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Atenção</strong> {{ session()->get('edit') }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session()->has('destroy'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Atenção</strong> {{ session()->get('destroy') }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+```
+

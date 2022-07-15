@@ -35,6 +35,14 @@
             <input type="file" name="image" id="image" class="form-control form control-md">
         </div>
 
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="admin" value="1" id="flexCheckDefault" >
+            <label class="form-check-label" for="flexCheckDefault">
+                Admin
+            </label>
+        </div>
+
+
         <button type="submit" class="btn btn-primary">Atualizar</button>
     </form>
 @endSection

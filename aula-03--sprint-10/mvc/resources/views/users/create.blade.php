@@ -2,15 +2,7 @@
 @section('title', 'Novo Usuario')
 @section('body')
 
-    @if(session()->has('create'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
     <h1 class="bg-dark text-white p-3 mt-5 text-center">Novo Usuario</h1>
-
-
     @if($errors->any())
         <div class="alert alert-danger">
             @foreach($errors->all() as $error)
