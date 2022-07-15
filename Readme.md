@@ -50,8 +50,10 @@ lessons of Laravel framework PHP in Devstart-byAcademy
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: [lesson 01](./aula-01/);\
-:heavy_check_mark: [lesson 02](./aula-02/);
+:heavy_check_mark: sprint 08;\
+:heavy_check_mark: sprint 09;\
+:heavy_check_mark: sprint 10;\
+:heavy_check_mark: sprint 11;
 
 ## :rocket: Technologies ##
 

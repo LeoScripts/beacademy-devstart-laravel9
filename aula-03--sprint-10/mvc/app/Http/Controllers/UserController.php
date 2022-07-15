@@ -23,15 +23,12 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        // $title = 'Usuario '.$user->name;
 
         if($user){
             return view('users.show', compact('user'));
         }else{
             throw new UserControllerException('Usuario não encontrado');
         }
-
-        // return view('users.show', compact('user','title'));
     }
 
     public function create( )
@@ -55,7 +52,6 @@ class UserController extends Controller
 
         $request->session()->flash('create', 'Usuario cadastrado com sucesso');
         return redirect()->route('users.index');
-
     }
 
     public function edit($id)
@@ -75,10 +71,8 @@ class UserController extends Controller
         if($request->password)
             $data['password'] = bcrypt($request->password);
 
-        // passando o campo de administrador
         $data['is_admin'] = $request->admin ? 1 : 0;
         $user->update($data);
-
         return redirect()->route('users.index')->with('edit', 'Usuario atualizado com sucesso');
     }
 
@@ -89,13 +83,10 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index')->with('destroy', 'Usuario removido com sucesso');
-
     }
 
     public function admin()
     {
         return view('admin.index');
     }
-
-
 }
