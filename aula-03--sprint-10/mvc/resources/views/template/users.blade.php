@@ -39,7 +39,7 @@
                         <a class="nav-link" href="{{ route('login') }}">Entrar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Cadastrar</a>
+                        <a class="nav-link" href="{{ route('users.create') }}">Cadastrar</a>
                     </li>
                 @endif
             </ul>
