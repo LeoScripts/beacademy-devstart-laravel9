@@ -47,6 +47,8 @@
 
  coding in lessons of Laravel 9 framework PHP in Devstart-byAcademy 
 
+- #### teacher: [José Lira](https://www.linkedin.com/in/jos%C3%A9-lira/)
+
 ## :sparkles: Features ##
 
 - #### :heavy_check_mark: sprint 08
