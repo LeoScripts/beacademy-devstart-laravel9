@@ -26,11 +26,10 @@
 
 <!-- Status -->
 
-<!-- <h4 align="center">
-	🚧  Beacademy Devstart Php Db 🚀 Under construction...  🚧
+<h4 align="center">
+	🚧  Under construction...  🚧
 </h4>
 
-<hr> -->
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0;
@@ -46,40 +45,40 @@
 
 ## :dart: About ##
 
-lessons of Laravel 9 framework PHP in Devstart-byAcademy 
+ coding in lessons of Laravel 9 framework PHP in Devstart-byAcademy 
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: sprint 08;\
-    [x] - More Laravel 9
-    [x] - Install
-    [X] - Php artisan
-    [X] - Routes
-:heavy_check_mark: sprint 09;\
-    [X] - More methods HTTP
-    [X] - Http Client
-    [X] - Migrations
-    [X] - Seeders
-    [X] - Listen users
-    [X] - Blade
-    [X] - Create user
-    [X] - Update user
-    [X] - Validations form fields
-:heavy_check_mark: sprint 10;\
-    [X] - Update file
-    [X] - Listen image in user
-    [X] - Relation part I
-    [X] - Relation part II
-    [X] - Relation part III
-    [X] - Search
-    [X] - Authentication I
-    [X] - Authentication II
-:heavy_check_mark: sprint 11;
-    [X] - Flash Messages
-    [X] - Exceptions
-    [X] - Unit Testing
-    [X] - Reuse code
-    [X] - Final
+- #### :heavy_check_mark: sprint 08
+    - [x] - More Laravel 9
+    - [x] - Install
+    - [X] - Php artisan
+    - [X] - Routes
+- #### :heavy_check_mark: sprint 09
+    - [X] - More methods HTTP
+    - [X] - Http Client
+    - [X] - Migrations
+    - [X] - Seeders
+    - [X] - Listen users
+    - [X] - Blade
+    - [X] - Create user
+    - [X] - Update user
+    - [X] - Validations form fields
+- #### :heavy_check_mark: sprint 10
+    - [X] - Update file
+    - [X] - Listen image in user
+    - [X] - Relation part I
+    - [X] - Relation part II
+    - [X] - Relation part III
+    - [X] - Search
+    - [X] - Authentication I
+    - [X] - Authentication II
+- #### :heavy_check_mark: sprint 11
+    - [X] - Flash Messages
+    - [X] - Exceptions
+    - [X] - Unit Testing
+    - [X] - Reuse code
+    - [X] - Final
 
 ## :rocket: Technologies ##
 
@@ -108,16 +107,25 @@ $ cd beacademy-devstart-laravel9
 # insert your credentils in
 # database and password
 
+# run database
+make up
+
+# install dependence
+composer install && npm install
+
 # execute is important
 composer dump-autoload 
 # or
 composer dump
 
-# run database
-make up
+# creating table
+php artisan migrate
 
 # (optional) view SGBD Adminer 4.8.1
 # acces localhost:8080
+
+# run npm (important ) 
+npm run dev
 
 # run server
 php artisan serve
