@@ -26,11 +26,10 @@
 
 <!-- Status -->
 
-<!-- <h4 align="center">
-	🚧  Beacademy Devstart Php Db 🚀 Under construction...  🚧
+<h4 align="center">
+	🚧  Under construction...  🚧
 </h4>
 
-<hr> -->
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0;
@@ -46,7 +45,7 @@
 
 ## :dart: About ##
 
-lessons of Laravel 9 framework PHP in Devstart-byAcademy 
+ coding in lessons of Laravel 9 framework PHP in Devstart-byAcademy 
 
 ## :sparkles: Features ##
 
@@ -108,16 +107,25 @@ $ cd beacademy-devstart-laravel9
 # insert your credentils in
 # database and password
 
+# run database
+make up
+
+# install dependence
+composer install && npm install
+
 # execute is important
 composer dump-autoload 
 # or
 composer dump
 
-# run database
-make up
+# creating table
+php artisan migrate
 
 # (optional) view SGBD Adminer 4.8.1
 # acces localhost:8080
+
+# run npm (important ) 
+npm run dev
 
 # run server
 php artisan serve
