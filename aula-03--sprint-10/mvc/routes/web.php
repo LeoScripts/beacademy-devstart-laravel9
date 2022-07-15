@@ -9,10 +9,6 @@ use App\Http\Controllers\{
 
 require __DIR__.'/auth.php';
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,7 +17,6 @@ Route::get('/users/create', [UserController::class, 'create'])->name('users.crea
 Route::post('/user', [UserController::class, 'store'])->name('users.store');
 
 Route::middleware(['auth'])->group(function() {
-
     Route::get('/posts',[PostController::class, 'index'])->name('posts.index');
     Route::get('/users/{id}/posts', [PostController::class, 'show'])->name('posts.show');
 
@@ -40,4 +35,3 @@ Route::middleware(['auth'])->group(function() {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [UserController::class, 'admin'])->name('admin');
 });
-
