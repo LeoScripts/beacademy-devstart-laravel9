@@ -46,7 +46,7 @@
 
 ## :dart: About ##
 
-lessons of Laravel framework PHP in Devstart-byAcademy
+lessons of Laravel 9 framework PHP in Devstart-byAcademy 
 
 ## :sparkles: Features ##
 
